@@ -10,7 +10,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+const handleCamera = (req, res) => {
+  console.log(req);
+
+  console.log("====================================");
+  res.send(200);
+};
 app.get("/cameras", eventsHandler);
+app.get("/", handleCamera);
 
 // cron.schedule("20 * * * * *", () => {
 //   console.log("running a task every 20 sec");
