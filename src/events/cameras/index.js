@@ -1,23 +1,36 @@
-export function eventsHandler(request, response, next) {
-  let event = {
-    date: new Date(),
-    image: "",
-    file: "",
-    infraction: "",
-  };
-  const headers = {
-    "Content-Type": "text/event-stream",
-    Connection: "keep-alive",
-    "Cache-Control": "no-cache",
-  };
-  response.writeHead(200, headers);
+import { v4 as uuidv4 } from "uuid";
 
-  const data = `data: ${JSON.stringify(event)}\n\n`;
+export const eventsHandler = (req, res) => {
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders(); // flush the headers to establish SSE with client
 
-  response.write(data);
+  let counter = 0;
+  let interValID = setInterval(() => {
+    counter++;
 
-  request.on("close", () => {
-    console.log(`Logged out ... Connection closed`);
-    // clients = clients.filter((client) => client.id !== clientId);
+    if (counter >= 100) {
+      clearInterval(interValID);
+      res.end(); // terminates SSE session
+      return;
+    }
+    let result = {
+      _id: uuidv4(),
+      image: "",
+      status: "UNREAD",
+      sentAt: new Date(),
+    };
+    res.write(`data: ${JSON.stringify(result)}\n\n`); // res.write() instead of res.send()
+  }, 15000);
+
+  // If client closes connection, stop sending events
+  res.on("close", () => {
+    console.log("client dropped me");
+    clearInterval(interValID);
+    res.end();
   });
-}
+};
+//srpi12345
+//475 947 982
