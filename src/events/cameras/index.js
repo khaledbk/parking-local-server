@@ -25,13 +25,13 @@ export const eventsHandler = (req, res) => {
     // res.write() instead of res.send()
     if (res.writableEnded) return;
     res.write(`data: ${JSON.stringify(result)}\n\n`);
-  
   });
 
 
   // If client closes connection, stop sending events
   res.on("close", () => {
     console.log("client dropped me");
+    fs.unwatchFile("./public/event_data.json");
     res.end();
   });
 };
