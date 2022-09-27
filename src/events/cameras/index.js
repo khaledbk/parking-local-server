@@ -17,7 +17,6 @@ export const eventsHandler = (req, res) => {
     console.log('file read ...')
     
     let result = {
-      _id: uuidv4(),
       status: "UNREAD",
       sentAt: new Date(),
       data: data.result
