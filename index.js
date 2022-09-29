@@ -45,8 +45,8 @@ var storage = multer.diskStorage({
     cb(null, "public");
   },
   filename: function (req, file, cb) {
-    //cb(null, test + "_" + file.originalname + ".json");
-    cb(null, test + "_" + file.fieldname + ".json");
+    cb(null, test + "_lo.json");
+    // cb(null, test + "_" + file.fieldname + ".json");
     //cb(null, file.originalname);
   },
 });

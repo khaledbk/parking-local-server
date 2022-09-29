@@ -51,13 +51,13 @@ export const eventsHandler = (req, res) => {
         console.log("TYING TO READ FROM", `.\\${path.replace("/", "\\")}`);
         data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
         data = JSON.parse(data);
-        console.log("DATA READ :", data);
+//        console.log("DATA READ :", data);
         // data.result.images.lp_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
+        // carsImg[Math.floor(Math.random() * carsImg.length)];
         // data.result.images.normal_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
+        // carsImg[Math.floor(Math.random() * carsImg.length)];
         // data.result.images.aux_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
+        // carsImg[Math.floor(Math.random() * carsImg.length)];
 
         // data.result.anpr.text = generateImmat();
         result = {
