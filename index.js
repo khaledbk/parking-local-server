@@ -37,7 +37,7 @@ const handleCamera = (req, res) => {
   console.log(
     "================================= POST-REQUEST ================================="
   );
-  console.log(JSON.stringify(req));
+  //console.log(JSON.stringify(req.));
 
   upload(req, res, function (err) {
     if (err) {
