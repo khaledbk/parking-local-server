@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import fs from "fs";
-
+import moment from "moment";
 var eventNum = 1;
 
 export const eventsHandler = (req, res) => {
@@ -11,22 +11,22 @@ export const eventsHandler = (req, res) => {
   res.flushHeaders(); // flush the headers to establish SSE with client
 
   fs.watchFile("./public/event_data.json", function (current, previous) {
-    console.log("Event | ", new Date());
+    console.log("Event | ", moment().format("LLLL").toString());
     let data = "";
 
     data = fs.readFileSync("./public/event_data.json");
     data = JSON.parse(data);
-    console.log("file read ...");
+    console.log("file read ...", moment().format("LLLL").toString());
 
     let result = {
       status: "UNREAD",
-      sentAt: new Date(),
+      sentAt: moment().format("LLLL").toString(),
       data: data.result,
     };
     // res.write() instead of res.send()
     if (res.writableEnded) return;
     res.write(`data: ${JSON.stringify(result)}\n\n`);
-    console.log("Event Sent at| ", new Date());
+    console.log("Event Sent at | ", moment().format("LLLL").toString());
   });
 
   // If client closes connection, stop sending events
