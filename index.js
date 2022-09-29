@@ -34,6 +34,7 @@ var upload = multer({
 
 const handleCamera = (req, res) => {
   console.log(
+    new Date(),
     "====================================",
     test,
     "===================================="
