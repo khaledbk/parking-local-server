@@ -11,22 +11,28 @@ export const eventsHandler = (req, res) => {
   res.flushHeaders(); // flush the headers to establish SSE with client
 
   fs.watchFile("./public/event_data.json", function (current, previous) {
-    console.log("Event | ", moment().format("LLLL").toString());
+    console.log("Event | ", moment().format("YYYY-MM-DD HH:mm:ss").toString());
     let data = "";
 
     data = fs.readFileSync("./public/event_data.json");
     data = JSON.parse(data);
-    console.log("file read ...", moment().format("LLLL").toString());
+    console.log(
+      "file read ...",
+      moment().format("YYYY-MM-DD HH:mm:ss").toString()
+    );
 
     let result = {
       status: "UNREAD",
-      sentAt: moment().format("LLLL").toString(),
+      sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       data: data.result,
     };
     // res.write() instead of res.send()
     if (res.writableEnded) return;
     res.write(`data: ${JSON.stringify(result)}\n\n`);
-    console.log("Event Sent at | ", moment().format("LLLL").toString());
+    console.log(
+      "Event Sent at | ",
+      moment().format("YYYY-MM-DD HH:mm:ss").toString()
+    );
   });
 
   // If client closes connection, stop sending events

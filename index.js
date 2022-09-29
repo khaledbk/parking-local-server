@@ -37,16 +37,16 @@ const handleCamera = (req, res) => {
   console.log(
     "================================= POST-REQUEST ================================="
   );
-  //console.log(JSON.stringify(req.));
+  console.log("1 - ", JSON.stringify(req.headers));
 
   upload(req, res, function (err) {
-    console.log(JSON.stringify(req.headers));
+    console.log("2 - ", JSON.stringify(req.headers));
     if (err) {
       console.log("upload err: ", err);
       res.send(err);
     } else {
       console.log(
-        moment().format("LLLL").toString(),
+        moment().format("YYYY-MM-DD HH:mm:ss").toString(),
         "==========",
         test,
         "=========="
