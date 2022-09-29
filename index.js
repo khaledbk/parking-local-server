@@ -33,18 +33,18 @@ var upload = multer({
 }).any();
 
 const handleCamera = (req, res) => {
-  console.log(
-    new Date(),
-    "====================================",
-    test,
-    "===================================="
-  );
-  test++;
   upload(req, res, function (err) {
     if (err) {
       console.log("upload err: ", err);
       res.send(err);
     } else {
+      console.log(
+        new Date(),
+        "====================================",
+        test,
+        "===================================="
+      );
+      test++;
       console.log("camera trigger");
       res.sendStatus(200);
     }
