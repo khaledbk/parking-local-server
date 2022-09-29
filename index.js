@@ -14,37 +14,36 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-
-      // Uploads is the Upload_folder_name
-      cb(null, "public")
+    // Uploads is the Upload_folder_name
+    cb(null, "public");
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + ".json")
-  }
-})
-     
+    cb(null, file.fieldname + new Date() + ".json");
+    cb(null, file.fieldname + ".json");
+  },
+});
+
 // Define the maximum size for uploading
 // picture i.e. 1 MB. it is optional
 const maxSize = 1 * 1000 * 10000;
-  
-var upload = multer({ 
+
+var upload = multer({
   storage: storage,
-  limits: { fileSize: maxSize }, 
-}).any();  
+  limits: { fileSize: maxSize },
+}).any();
 
 const handleCamera = (req, res) => {
   console.log("====================================");
 
-  upload(req,res,function(err) {
-    if(err) {
-      console.log("upload err: ", err)
-      res.send(err)
+  upload(req, res, function (err) {
+    if (err) {
+      console.log("upload err: ", err);
+      res.send(err);
     } else {
       console.log("camera trigger");
       res.sendStatus(200);
     }
-  })
-
+  });
 };
 
 app.get("/cameras", eventsHandler);
