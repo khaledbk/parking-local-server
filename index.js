@@ -7,7 +7,7 @@ import multer from "multer";
 
 const PORT = 3002;
 export const app = express();
-
+let test = 1;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -33,17 +33,21 @@ var upload = multer({
 }).any();
 
 const handleCamera = (req, res) => {
-  console.log("====================================");
-
-  upload(req, res, function (err) {
-    if (err) {
-      console.log("upload err: ", err);
-      res.send(err);
-    } else {
-      console.log("camera trigger");
-      res.sendStatus(200);
-    }
-  });
+  console.log(
+    "====================================",
+    test,
+    "===================================="
+  );
+  test++;
+  // upload(req, res, function (err) {
+  //   if (err) {
+  //     console.log("upload err: ", err);
+  //     res.send(err);
+  //   } else {
+  //     console.log("camera trigger");
+  //     res.sendStatus(200);
+  //   }
+  // });
 };
 
 app.get("/cameras", eventsHandler);
