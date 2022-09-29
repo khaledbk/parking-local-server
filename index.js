@@ -40,15 +40,15 @@ const handleCamera = (req, res) => {
     "===================================="
   );
   test++;
-  // upload(req, res, function (err) {
-  //   if (err) {
-  //     console.log("upload err: ", err);
-  //     res.send(err);
-  //   } else {
-  //     console.log("camera trigger");
-  //     res.sendStatus(200);
-  //   }
-  // });
+  upload(req, res, function (err) {
+    if (err) {
+      console.log("upload err: ", err);
+      res.send(err);
+    } else {
+      console.log("camera trigger");
+      res.sendStatus(200);
+    }
+  });
 };
 
 app.get("/cameras", eventsHandler);
