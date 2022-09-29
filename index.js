@@ -40,7 +40,7 @@ const handleCamera = (req, res) => {
   //console.log(JSON.stringify(req.));
 
   upload(req, res, function (err) {
-    console.log(JSON.stringify(req));
+    console.log(JSON.stringify(req.body));
     if (err) {
       console.log("upload err: ", err);
       res.send(err);
