@@ -29,7 +29,10 @@ export const eventsHandler = (req, res) => {
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  .\\${path.replace("/", "\\")}`
+      ` on this file =====>  .\\${path.replace(
+        "/",
+        "\\"
+      )}        ...... ${path}`
     );
     fs.writeFile(
       "./log.txt",
@@ -48,8 +51,15 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
+        console.log(
+          "TYING TO READ FROM",
+          path,
+          " | ",
+          `.\\${path.replace("/", "\\")}`
+        );
         data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
         data = JSON.parse(data);
+        console.log("DATA READ :", data);
         // data.result.images.lp_img =
         //   carsImg[Math.floor(Math.random() * carsImg.length)];
         // data.result.images.normal_img =
