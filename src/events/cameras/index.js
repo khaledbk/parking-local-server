@@ -10,6 +10,15 @@ const carsImg = [
   "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII",
 ];
 
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
 const generateImmat = () =>
   characters.charAt(Math.floor(Math.random() * characters.length)) +
   numbers.charAt(Math.floor(Math.random() * numbers.length)) +
@@ -49,9 +58,14 @@ export const eventsHandler = (req, res) => {
     if (event === "add") {
       try {
         console.log("TYING TO READ FROM", `.\\${path.replace("/", "\\")}`);
-        data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
-        data = JSON.parse(data);
-//        console.log("DATA READ :", data);
+        setTimeout(() => {
+          data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
+          if (isJsonString(data)) {
+            console.log("THIS IS VALID JSON");
+            data = JSON.parse(data);
+          }
+        }, 100);
+        //        console.log("DATA READ :", data);
         // data.result.images.lp_img =
         // carsImg[Math.floor(Math.random() * carsImg.length)];
         // data.result.images.normal_img =
