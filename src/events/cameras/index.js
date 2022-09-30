@@ -24,15 +24,12 @@ export const eventsHandler = (req, res) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders(); // flush the headers to establish SSE with client
 
-  chokidar.watch(`./public`).on("all", (event, path) => {
+  chokidar.watch(`.\\public`).on("all", (event, path) => {
     console.log(
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  .\\${path.replace(
-        "/",
-        "\\"
-      )}        ...... ${path}`
+      ` on this file =====>  .\\${path.replace("/", "\\")}`
     );
     fs.writeFile(
       "./log.txt",
@@ -51,12 +48,7 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
-        console.log(
-          "TYING TO READ FROM",
-          path,
-          " | ",
-          `.\\${path.replace("/", "\\")}`
-        );
+        console.log("TYING TO READ FROM", `.\\${path.replace("/", "\\")}`);
         data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
         data = JSON.parse(data);
         console.log("DATA READ :", data);
