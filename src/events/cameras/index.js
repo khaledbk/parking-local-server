@@ -24,7 +24,7 @@ export const eventsHandler = (req, res) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders(); // flush the headers to establish SSE with client
 
-  chokidar.watch(`.\\public`).on("all", (event, path) => {
+  chokidar.watch(`./public`).on("all", (event, path) => {
     console.log(
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
