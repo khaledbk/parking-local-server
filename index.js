@@ -46,7 +46,7 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     //cb(null, test + "_" + file.originalname + ".json");
-    cb(null, test + "_" + file.fieldname + ".json");
+    cb(null, moment().format("YYYY-MM-DD HH:mm:ss") + "_plate_detection.json");
     //cb(null, file.originalname);
   },
 });

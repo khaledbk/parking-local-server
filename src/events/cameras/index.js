@@ -24,12 +24,12 @@ export const eventsHandler = (req, res) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders(); // flush the headers to establish SSE with client
 
-  chokidar.watch(`.\\public`).on("all", (event, path) => {
+  chokidar.watch(`./public`).on("all", (event, path) => {
     console.log(
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  .\\${path.replace("/", "\\")}`
+      ` on this file =====>  ./${path}`
     );
     fs.writeFile(
       "./log.txt",
@@ -48,18 +48,18 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
-        console.log("TYING TO READ FROM", `.\\${path.replace("/", "\\")}`);
-        data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
+        console.log("TYING TO READ FROM", `./${path}`);
+        data = fs.readFileSync(`./${path}`);
         data = JSON.parse(data);
-        console.log("DATA READ :", data);
-        // data.result.images.lp_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
-        // data.result.images.normal_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
-        // data.result.images.aux_img =
-        //   carsImg[Math.floor(Math.random() * carsImg.length)];
+        //console.log("DATA READ :", data);
+        data.result.images.lp_img =
+          carsImg[Math.floor(Math.random() * carsImg.length)];
+        data.result.images.normal_img =
+          carsImg[Math.floor(Math.random() * carsImg.length)];
+        data.result.images.aux_img =
+          carsImg[Math.floor(Math.random() * carsImg.length)];
 
-        // data.result.anpr.text = generateImmat();
+        data.result.anpr.text = generateImmat();
         result = {
           status: "UNREAD",
           sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
