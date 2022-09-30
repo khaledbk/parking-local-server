@@ -48,7 +48,7 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
-        data = fs.readFileSync(`.${path.replace("/", "\\")}`);
+        data = fs.readFileSync(`.\\${path.replace("/", "\\")}`);
         data = JSON.parse(data);
         // data.result.images.lp_img =
         //   carsImg[Math.floor(Math.random() * carsImg.length)];
