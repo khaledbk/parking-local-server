@@ -24,12 +24,12 @@ export const eventsHandler = (req, res) => {
   res.setHeader("Connection", "keep-alive");
   res.flushHeaders(); // flush the headers to establish SSE with client
 
-  chokidar.watch("./public").on("all", (event, path) => {
+  chokidar.watch(`.\\public`).on("all", (event, path) => {
     console.log(
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  ./${path}`
+      ` on this file =====>  .\\${path.replace("/", "\\")}`
     );
     fs.writeFile(
       "./log.txt",
@@ -48,7 +48,7 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
-        data = fs.readFileSync(`./${path}`);
+        data = fs.readFileSync(`.${path.replace("/", "\\")}`);
         data = JSON.parse(data);
         // data.result.images.lp_img =
         //   carsImg[Math.floor(Math.random() * carsImg.length)];
