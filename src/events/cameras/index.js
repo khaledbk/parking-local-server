@@ -63,6 +63,13 @@ export const eventsHandler = (req, res) => {
           if (isJsonString(data)) {
             console.log("THIS IS VALID JSON");
             data = JSON.parse(data);
+            result = {
+              status: "UNREAD",
+              sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+              data: data.result,
+            };
+            if (res.writableEnded) return;
+            res.write(`data: ${JSON.stringify(result)}\n\n`);
           }
         }, 100);
         //        console.log("DATA READ :", data);
@@ -74,13 +81,7 @@ export const eventsHandler = (req, res) => {
         // carsImg[Math.floor(Math.random() * carsImg.length)];
 
         // data.result.anpr.text = generateImmat();
-        result = {
-          status: "UNREAD",
-          sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
-          data: data.result,
-        };
-        if (res.writableEnded) return;
-        res.write(`data: ${JSON.stringify(result)}\n\n`);
+
         fs.writeFile(
           "./log.txt",
           `${moment().format("YYYY-MM-DD HH:mm:ss").toString()}: EVENT SENT \n`,
