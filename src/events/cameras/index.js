@@ -1,14 +1,10 @@
 import fs from "fs";
 import moment from "moment";
 import chokidar from "chokidar";
+import carsImg from "./sampleCars.js";
 
 let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let numbers = "0123456789";
-
-const carsImg = [
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
-  "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAIAQMAAAD+wSzIAAAABlBMVEX///+/v7+jQ3Y5AAAADklEQVQI12P4AIX8EAgALgAD/aNpbtEAAAAASUVORK5CYII",
-];
 
 const generateImmat = () =>
   characters.charAt(Math.floor(Math.random() * characters.length)) +
@@ -93,13 +89,9 @@ export const eventsHandler = (req, res) => {
     );
   });
 
-  // fs.watchFile("./public/event_data.json", function (current, previous) {
-
-  // });
-
   // If client closes connection, stop sending events
   res.on("close", () => {
-    console.log("client dropped me");
+    console.log("[LOG]: Client dropped connection to SSE - Local Server !");
     fs.unwatchFile("./public/event_data.json");
     res.end();
   });
