@@ -5,6 +5,21 @@ import carsImg from "./sampleCars.js";
 
 let characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 let numbers = "0123456789";
+const provinces = [
+  { code: "NU", name: "Nunavut" },
+  { code: "NT", name: "Northwest Territories" },
+  { code: "YT", name: "Yukon" },
+  { code: "BC", name: "British Columbia" },
+  { code: "AB", name: "Alberta" },
+  { code: "SK", name: "Saskatchewan" },
+  { code: "MB", name: "Manitoba" },
+  { code: "ON", name: "Ontario" },
+  { code: "QC", name: "Quebec" },
+  { code: "NB", name: "New Brunswick" },
+  { code: "NS", name: "Nova Scotia" },
+  { code: "PE", name: "Prince Edward Island" },
+  { code: "NL", name: "Newfoundland and Labrador" },
+];
 
 const generateImmat = () =>
   characters.charAt(Math.floor(Math.random() * characters.length)) +
@@ -44,18 +59,20 @@ export const eventsHandler = (req, res) => {
     let result;
     if (event === "add") {
       try {
+        let radomImg = carsImg[Math.floor(Math.random() * carsImg.length)];
         console.log("TYING TO READ FROM", `./${path}`);
         data = fs.readFileSync(`./${path}`);
         data = JSON.parse(data);
         //console.log("DATA READ :", data);
-        data.result.images.lp_img =
-          carsImg[Math.floor(Math.random() * carsImg.length)];
-        data.result.images.normal_img =
-          carsImg[Math.floor(Math.random() * carsImg.length)];
-        data.result.images.aux_img =
-          carsImg[Math.floor(Math.random() * carsImg.length)];
+        // let randomProvince =
+        //   provinces[Math.floor(Math.random() * provinces.length)];
+        // data.result.images.lp_img = radomImg;
 
-        data.result.anpr.text = generateImmat();
+        // data.result.images.lp_img = radomImg;
+        // data.result.images.normal_img = radomImg;
+        // data.result.images.aux_img = radomImg;
+
+        // data.result.anpr.text = generateImmat();
         result = {
           status: "UNREAD",
           sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
