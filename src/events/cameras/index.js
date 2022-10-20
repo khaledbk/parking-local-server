@@ -40,7 +40,7 @@ export const eventsHandler = (req, res) => {
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  ./${path}`
+      ` on this file ======>  ./${path}`
     );
     fs.writeFile(
       "./log.txt",
