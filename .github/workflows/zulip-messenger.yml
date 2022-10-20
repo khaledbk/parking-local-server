@@ -1,0 +1,10 @@
+- name: Send zulip messages after running a job
+  uses: zulip/github-actions-zulip/send-message@v1
+  with:
+    api-key: ${{ secrets.A6XYU3Brz5DoWmfoIeJYKs1cUFElhflW }}
+    email: "github-integration-bot@khaledbk.zulipchat.com"
+    organization-url: "https://khaledbk.zulipchat.com/"
+    to: "github-pipeline"
+    type: "stream"
+    topic: "Test Integration Action"
+    content: "this is a test here after running the test!!"
