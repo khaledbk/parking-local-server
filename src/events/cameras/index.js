@@ -42,6 +42,7 @@ export const eventsHandler = (req, res) => {
               status: "UNREAD",
               sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
               data: data.result,
+              ipAddr: global.eventsIPs[path.split("/")[1]],
             };
             if (res.writableEnded) return;
             res.write(`data: ${JSON.stringify(result)}\n\n`);

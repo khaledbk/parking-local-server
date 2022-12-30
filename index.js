@@ -10,6 +10,9 @@ import path from "path";
 const PORT = 3002;
 export const app = express();
 const directory = "public";
+
+global.eventsIPs = {};
+
 fs.readdir(directory, (err, files) => {
   if (err) throw err;
 
@@ -33,11 +36,13 @@ fs.writeFile(
     // file written successfully
   }
 );
+
 app.use(bodyParser({ limit: "50mb" }));
-let test = 1;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+let test = 1;
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -46,6 +51,12 @@ var storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     cb(null, test + "_lo.json");
+
+    let ipAddress =
+      req.headers["x-forwarded-for"] || req.socket.remoteAddress || null;
+
+    global.eventsIPs[test + "_lo.json"] = ipAddress;
+
     // cb(null, test + "_" + file.fieldname + ".json");
     //cb(null, file.originalname);
   },
@@ -64,6 +75,9 @@ const handleCamera = (req, res) => {
   console.log(
     `================================= POST-REQUEST ${test}=================================`
   );
+
+  console.log("req", req.body);
+
   fs.writeFile(
     "./log.txt",
     `${moment()
