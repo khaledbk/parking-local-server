@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import { eventsHandler } from "./src/events/cameras/index.js";
+import { pingmanHandler } from "./src/events/ping/index.js";
 import multer from "multer";
 import moment from "moment";
 import fs from "fs";
@@ -45,7 +46,7 @@ var storage = multer.diskStorage({
     cb(null, "public");
   },
   filename: function (req, file, cb) {
-    cb(null, test + "_lo.json");
+    cb(null, test + "_cam_event.json");
     // cb(null, test + "_" + file.fieldname + ".json");
     //cb(null, file.originalname);
   },
@@ -62,7 +63,7 @@ var upload = multer({
 
 const handleCamera = (req, res) => {
   console.log(
-    `================================= POST-REQUEST ${test}=================================`
+    `================================= CAM REQUEST DETECTED =================================`
   );
   fs.writeFile(
     "./log.txt",
@@ -115,7 +116,10 @@ const handleCamera = (req, res) => {
 };
 
 app.get("/cameras", eventsHandler);
-app.post("*", handleCamera);
+
+app.post("/cam-events", handleCamera);
+
+app.post("/ping", pingmanHandler);
 
 // cron.schedule("20 * * * * *", () => {
 //   console.log("running a task every 20 sec");
