@@ -26,7 +26,7 @@ export const eventsHandler = (req, res) => {
       moment().format("YYYY-MM-DD HH:mm:ss").toString(),
       "[Action]:",
       event,
-      ` on this file =====>  ./${path}`
+      `listning for changes on this file =====>  ./${path}`
     );
     let data = "";
     let result;
@@ -58,13 +58,9 @@ export const eventsHandler = (req, res) => {
 
     // res.write() instead of res.send()
     console.log(
-      "================================= END ================================="
+      "============================================ END ============================================"
     );
   });
-
-  // fs.watchFile("./public/event_data.json", function (current, previous) {
-
-  // });
 
   // If client closes connection, stop sending events
   res.on("close", () => {
@@ -73,5 +69,3 @@ export const eventsHandler = (req, res) => {
     res.end();
   });
 };
-//srpi12345
-//475 947 982
