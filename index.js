@@ -3,10 +3,10 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { eventsHandler } from "./src/handlers/cameras/index.js";
 import { pingmanHandler } from "./src/handlers/ping/index.js";
-import { heartbeatHandler } from "./src/handlers/heartbeat";
+import { heartbeatHandler } from "./src/handlers/heartbeat/index.js";
 import fs from "fs";
 import path from "path";
-import { camEventsHandler } from "./src/handlers/camEvents";
+import { camEventsHandler } from "./src/handlers/camEvents/index.js";
 import localIpAddress from "local-ip-address";
 
 const PORT = 3002;
