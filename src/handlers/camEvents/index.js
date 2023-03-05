@@ -30,7 +30,7 @@ var upload = multer({
   limits: { fileSize: maxSize },
 }).any();
 
-export const handleCamera = (req, res) => {
+export const camEventsHandler = (req, res) => {
   console.log(
     `================================= CAM REQUEST DETECTED =================================`
   );

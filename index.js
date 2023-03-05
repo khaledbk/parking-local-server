@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { eventsHandler } from "./src/events/cameras/index.js";
-import { pingmanHandler } from "./src/events/ping/index.js";
+import { eventsHandler } from "./src/handlers/cameras/index.js";
+import { pingmanHandler } from "./src/handlers/ping/index.js";
+import { heartbeatHandler } from "./src/handlers/heartbeat";
 import fs from "fs";
 import path from "path";
-import { handleCamera } from "./src/functions/cameraEvents.js";
+import { camEventsHandler } from "./src/handlers/camEvents";
 import localIpAddress from "local-ip-address";
-import { heartbeat } from "./src/functions/heartbeat.js";
 
 const PORT = 3002;
 const directory = "public";
@@ -48,11 +48,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get("/cameras", eventsHandler);
 
-app.post("/cam-events", handleCamera);
+app.get("/heartbeat", heartbeatHandler);
+
+app.post("/cam-events", camEventsHandler);
 
 app.post("/ping", pingmanHandler);
-
-app.get("/heartbeat", heartbeat);
 
 app.listen(PORT, () => {
   console.log(

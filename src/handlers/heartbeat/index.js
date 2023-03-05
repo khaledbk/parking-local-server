@@ -2,7 +2,7 @@ import os from "os";
 import process from "process";
 import localIpAddress from "local-ip-address";
 
-export const heartbeat = (req, res) => {
+export const heartbeatHandler = (req, res) => {
   const systemInfo = {
     status: "online",
     hostname: os.hostname(),
