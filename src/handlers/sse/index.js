@@ -14,7 +14,7 @@ function isJsonString(str) {
   return true;
 }
 
-export const eventsHandler = (req, res) => {
+export const sseHandler = (req, res) => {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Access-Control-Allow-Origin", "*");

@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { eventsHandler } from "./src/handlers/cameras/index.js";
+import { sseHandler } from "./src/handlers/sse/index.js";
 import { pingmanHandler } from "./src/handlers/ping/index.js";
 import { heartbeatHandler } from "./src/handlers/heartbeat/index.js";
 import fs from "fs";
@@ -46,7 +46,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/cameras", eventsHandler);
+app.get("/sse", sseHandler);
 
 app.get("/heartbeat", heartbeatHandler);
 
