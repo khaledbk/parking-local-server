@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "clean": "rm -rf build",
     "build": "npm run clean && babel ./ --ignore node_modules -d build",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,19 +13,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.20.0",
     "chokidar": "^3.5.3",
     "cors": "^2.8.5",
     "express": "^4.18.1",
-    "filereader": "^0.10.3",
     "local-ip-address": "^1.0.0",
-    "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "multer": "^1.4.5-lts.1",
-    "node-cron": "^3.0.2",
-    "node-fetch": "^3.2.10",
-    "nodemon": "^2.0.19",
-    "sse": "^0.0.8",
+    "socket.io": "^4.6.1",
     "tcp-ping-port": "^1.0.1",
     "uuid": "^8.3.2"
   },

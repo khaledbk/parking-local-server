@@ -1,8 +1,7 @@
 import os from "os";
-import process from "process";
 import localIpAddress from "local-ip-address";
 
-export const heartbeatHandler = (req, res) => {
+export const heartbeatHandler = (_req, res) => {
   const systemInfo = {
     status: "online",
     hostname: os.hostname(),
@@ -17,7 +16,7 @@ export const heartbeatHandler = (req, res) => {
     os: os.version(),
     networkInterface: os.networkInterfaces(),
     userInfo: os.userInfo(),
-    machine: os.machine(),
+    machine: os.platform(),
     process: {
       pid: process.pid,
       version: process.version,
