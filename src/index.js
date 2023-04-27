@@ -3,6 +3,7 @@ import cors from "cors";
 import { camEventsHandler } from "./handlers/camEventsHandler.js";
 import { heartbeatHandler } from "./handlers/heartbeatHandler.js";
 import { pingmanHandler } from "./handlers/pingmanHandler.js";
+import { startGpsParser } from "./handlers/gpsHandler.js";
 
 import localIpAddress from "local-ip-address";
 import fs from "fs";
@@ -16,6 +17,7 @@ const directory = "public";
 const app = express();
 const server = http.createServer(app);
 initIo(server);
+startGpsParser();
 
 fs.readdir(directory, (err, files) => {
   if (err) throw err;

@@ -19,6 +19,7 @@
     "local-ip-address": "^1.0.0",
     "moment": "^2.29.4",
     "multer": "^1.4.5-lts.1",
+    "serialport": "^10.5.0",
     "socket.io": "^4.6.1",
     "tcp-ping-port": "^1.0.1",
     "uuid": "^8.3.2"
