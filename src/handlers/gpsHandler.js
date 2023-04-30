@@ -1,11 +1,11 @@
 import { SerialPort } from "serialport";
 import { ReadlineParser } from "@serialport/parser-readline";
 
-const gps_path = process.env.GPS_SERIAL_PORT || "COM6";
+/* const gps_path = process.env.GPS_SERIAL_PORT || "COM6";
 
 const port = new SerialPort({ path: gps_path, baudRate: 57600 });
 const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
-
+ */
 export let latestCoordinates = {
   latitude: 0,
   longitude: 0,
