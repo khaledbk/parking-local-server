@@ -1,14 +1,20 @@
 import { SerialPort } from "serialport";
 import { ReadlineParser } from "@serialport/parser-readline";
 
-/* const gps_path = process.env.GPS_SERIAL_PORT || "COM6";
+const gps_path = process.env.GPS_SERIAL_PORT || "COM6";
 
 const port = new SerialPort({ path: gps_path, baudRate: 57600 });
 const parser = port.pipe(new ReadlineParser({ delimiter: "\r\n" }));
- */
+
 export let latestCoordinates = {
   latitude: 0,
   longitude: 0,
+};
+
+const convertToDecimalDegrees = (value) => {
+  const degrees = Math.floor(value / 100);
+  const minutes = value % 100;
+  return degrees + minutes / 60;
 };
 
 export const startGpsParser = () => {
@@ -20,7 +26,7 @@ export const startGpsParser = () => {
   let ggaLongitudeSign;
   let rmcLatitudeSign;
   let rmcLongitudeSign;
-  
+
   parser.on("data", (data) => {
     // Check if the data contains GPS information
     if (data.startsWith("$GNRMC") || data.startsWith("$GNGGA")) {
@@ -34,14 +40,15 @@ export const startGpsParser = () => {
         ggaLongitude = parseFloat(values[4]);
         ggaLatitudeSign = values[3] === "N" ? 1 : -1;
         ggaLongitudeSign = values[5] === "E" ? 1 : -1;
-      
+
         // Check if the latitude and longitude are valid numbers
         if (!isNaN(ggaLatitude) && !isNaN(ggaLongitude)) {
           // Convert latitude and longitude to decimal degrees
-          ggaLatitude = ggaLatitude / 100 + (ggaLatitude % 100) / 60;
-          ggaLongitude = ggaLongitude / 100 + (ggaLongitude % 100) / 60;
+          ggaLatitude = convertToDecimalDegrees(ggaLatitude) * ggaLatitudeSign;
+          ggaLongitude =
+            convertToDecimalDegrees(ggaLongitude) * ggaLongitudeSign;
 
-          /*           console.log(
+/*           console.log(
             `GGA: Latitude: ${ggaLatitude}, Longitude: ${ggaLongitude}`
           ); */
         }
@@ -57,10 +64,11 @@ export const startGpsParser = () => {
         // Check if the latitude and longitude are valid numbers
         if (!isNaN(rmcLatitude) && !isNaN(rmcLongitude)) {
           // Convert latitude and longitude to decimal degrees
-          rmcLatitude = rmcLatitude / 100 + (rmcLatitude % 100) / 60;
-          rmcLongitude = rmcLongitude / 100 + (rmcLongitude % 100) / 60;
+          rmcLatitude = convertToDecimalDegrees(rmcLatitude) * rmcLatitudeSign;
+          rmcLongitude =
+            convertToDecimalDegrees(rmcLongitude) * rmcLongitudeSign;
 
-          /*           console.log(
+/*           console.log(
             `RMC: Latitude: ${rmcLatitude}, Longitude: ${rmcLongitude}`
           ); */
         }
@@ -73,11 +81,11 @@ export const startGpsParser = () => {
         rmcLatitude !== undefined &&
         rmcLongitude !== undefined
       ) {
-        const latitude = (ggaLatitudeSign * ggaLatitude + rmcLatitudeSign * rmcLatitude) / 2;
-        const longitude = (ggaLongitudeSign * ggaLongitude + rmcLongitudeSign * rmcLongitude) / 2;
+        const latitude = (ggaLatitude + rmcLatitude) / 2;
+        const longitude = (ggaLongitude + rmcLongitude) / 2;
         latestCoordinates = { latitude, longitude };
 
-        // console.log(`GPS: Latitude: ${latitude}, Longitude: ${longitude}`);
+        /* console.log(`GPS: Latitude: ${latitude}, Longitude: ${longitude}`); */
       }
     }
   });
