@@ -2,6 +2,8 @@ import multer from "multer";
 import crypto from "crypto";
 import async from "async";
 
+export const eventsIpAddresses = {}; // Global variable to store IP addresses
+
 const scans = {
   count: 0,
   increment: function () {
@@ -41,6 +43,13 @@ uploadQueue.error((err, task) => {
   console.error("There was an error processing a file upload:", err);
 });
 
+const extractIPv4 = (ipAddress) => {
+  if (ipAddress.startsWith("::ffff:")) {
+    return ipAddress.slice(7);
+  }
+  return ipAddress;
+};
+
 export const camEventsHandler = async (req, res) => {
   uploadQueue.push(async () => {
     await new Promise((resolve, reject) => {
@@ -49,6 +58,12 @@ export const camEventsHandler = async (req, res) => {
           handleError(err, res);
           reject(err);
         } else {
+          let clientIP =
+            req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+          clientIP = extractIPv4(clientIP);
+          const uniqueFilename = res.req.files[0].filename;
+          eventsIpAddresses[uniqueFilename] = clientIP; // Save the IP address with the filename as key
+          // console.log("eventsIpAddresses", eventsIpAddresses);
           scans.increment();
           res.sendStatus(200);
           resolve();

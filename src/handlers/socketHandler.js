@@ -3,6 +3,7 @@ import chokidar from "chokidar";
 import fs from "fs";
 import moment from "moment";
 import { latestCoordinates } from "./gpsHandler.js";
+import { eventsIpAddresses } from "./camEventsHandler.js";
 
 export const initIo = (server) => {
   const io = new Server(server, {
@@ -27,9 +28,10 @@ export const initIo = (server) => {
 
         const result = {
           status: "UNREAD",
-          sentAt: moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+          sentAt: new Date().toLocaleString("en-US", {timeZone: "America/Montreal"}),
           data: parsedData.result,
           localisation: latestCoordinates,
+          ipAddress: eventsIpAddresses[filePath.substring(filePath.lastIndexOf('/') + 1)]
         };
 
         // Emit the event and log the message
