@@ -28,10 +28,15 @@ export const initIo = (server) => {
 
         const result = {
           status: "UNREAD",
-          sentAt: new Date().toLocaleString("en-US", {timeZone: "America/Montreal"}),
+          sentAt: new Date().toLocaleString("en-US", {
+            timeZone: "America/Montreal",
+          }),
           data: parsedData.result,
           localisation: latestCoordinates,
-          ipAddress: eventsIpAddresses[filePath.substring(filePath.lastIndexOf('/') + 1)]
+          ipAddress:
+            eventsIpAddresses[
+              filePath.substring(filePath.lastIndexOf("/") + 1)
+            ],
         };
 
         // Emit the event and log the message
@@ -51,9 +56,11 @@ export const initIo = (server) => {
 
     // Send the latest coordinates every 2 seconds
     const sendLatestCoordinates = setInterval(() => {
-      console.log(`GPS: Latitude: ${latestCoordinates.latitude}, Longitude: ${latestCoordinates.longitude}`);
+      console.log(
+        `GPS: Latitude: ${latestCoordinates.latitude}, Longitude: ${latestCoordinates.longitude}`
+      );
       io.emit("gpsUpdate", latestCoordinates);
-    }, 2000);
+    }, 500);
 
     socket.on("disconnect", () => {
       console.log("Client disconnected:", socket.id);
