@@ -33,10 +33,7 @@ const upload = multer({
 const uploadQueue = async.queue(async (task, done) => {
   try {
     await task();
-    done();
-  } catch (err) {
-    done(err);
-  }
+  } catch (err) {}
 }, 1);
 
 uploadQueue.error((err, task) => {
