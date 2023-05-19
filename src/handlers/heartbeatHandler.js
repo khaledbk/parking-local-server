@@ -23,7 +23,7 @@ export const heartbeatHandler = (_req, res) => {
       memoryUsage: process.memoryUsage(),
       uptime: process.uptime(),
     },
-    version: "1.1.1",
+    version: "1.1.2",
   };
   res.status(200).json(systemInfo);
 };

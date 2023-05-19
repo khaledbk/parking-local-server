@@ -11,7 +11,10 @@ import path from "path";
 import http from "http";
 import { initIo } from "./handlers/socketHandler.js";
 
-const PORT = 3002;
+const PORT = process.env.EXPRESS_PORT ? process.env.EXPRESS_PORT : 3002;
+const STATIC_IP = process.env.EXPRESS_STATIC_IP
+  ? process.env.EXPRESS_STATIC_IP
+  : "192.168.2.27";
 const directory = "public";
 
 const app = express();
@@ -37,7 +40,9 @@ app.get("/heartbeat", heartbeatHandler);
 app.post("/cam-events", camEventsHandler);
 app.post("/ping", pingmanHandler);
 
-server.listen(PORT, () => {
-  console.log("========================================= Starting ==========================================");
-  console.log("🚀 . . . .  Cam-Server is running on ", localIpAddress(), ":", PORT);
+server.listen(PORT, STATIC_IP, () => {
+  console.log(
+    "========================================= Starting =========================================="
+  );
+  console.log("🚀 . . . .  Cam-Server is running on ", STATIC_IP, ":", PORT);
 });
