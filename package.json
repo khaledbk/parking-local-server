@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node dist/index.js",
     "clean": "rm -rf build",
-    "build": "npm run clean && babel ./ --ignore node_modules -d build",
+    "build": "npm run clean && babel src -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -25,5 +25,10 @@
     "tcp-ping-port": "^1.0.1",
     "uuid": "^8.3.2"
   },
-  "type": "module"
+  "type": "commonjs",
+  "devDependencies": {
+    "@babel/cli": "^7.21.5",
+    "@babel/core": "^7.21.8",
+    "@babel/preset-env": "^7.21.5"
+  }
 }

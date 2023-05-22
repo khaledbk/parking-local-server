@@ -40,7 +40,7 @@ app.get("/heartbeat", heartbeatHandler);
 app.post("/cam-events", camEventsHandler);
 app.post("/ping", pingmanHandler);
 
-server.listen(PORT, STATIC_IP, () => {
+server.listen(PORT, () => {
   console.log(
     "========================================= Starting =========================================="
   );
