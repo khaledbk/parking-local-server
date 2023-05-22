@@ -27,6 +27,12 @@ export const startGpsParser = () => {
   let rmcLatitudeSign;
   let rmcLongitudeSign;
 
+  // Handle error event
+  port.on("error", (error) => {
+    console.error("Serial port error:", "No GPS module found!");
+    // Perform error handling here, such as logging the error or taking appropriate actions
+  });
+
   parser.on("data", (data) => {
     // Check if the data contains GPS information
     if (data.startsWith("$GNRMC") || data.startsWith("$GNGGA")) {
@@ -48,7 +54,7 @@ export const startGpsParser = () => {
           ggaLongitude =
             convertToDecimalDegrees(ggaLongitude) * ggaLongitudeSign;
 
-/*           console.log(
+          /*           console.log(
             `GGA: Latitude: ${ggaLatitude}, Longitude: ${ggaLongitude}`
           ); */
         }
@@ -68,7 +74,7 @@ export const startGpsParser = () => {
           rmcLongitude =
             convertToDecimalDegrees(rmcLongitude) * rmcLongitudeSign;
 
-/*           console.log(
+          /*           console.log(
             `RMC: Latitude: ${rmcLatitude}, Longitude: ${rmcLongitude}`
           ); */
         }
