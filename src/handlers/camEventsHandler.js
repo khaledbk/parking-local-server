@@ -59,6 +59,10 @@ export const camEventsHandler = async (req, res) => {
             req.headers["x-forwarded-for"] || req.connection.remoteAddress;
           clientIP = extractIPv4(clientIP);
           const uniqueFilename = res.req.files[0].filename;
+          console.log(
+            moment().format("YYYY-MM-DD HH:mm:ss").toString(),
+            `[Action]: Request received - filename :${uniqueFilename}`
+          );
           eventsIpAddresses[uniqueFilename] = clientIP; // Save the IP address with the filename as key
           // console.log("eventsIpAddresses", eventsIpAddresses);
           scans.increment();
